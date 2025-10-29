@@ -21,3 +21,6 @@ require_once __DIR__ . '/includes/ability-get-plugins.php';
 require_once __DIR__ . '/includes/ability-debug-log.php';
 require_once __DIR__ . '/includes/ability-create-post.php';
 require_once __DIR__ . '/includes/ability-check-security.php';
+
+// Include admin page
+require_once __DIR__ . '/admin/abilities-demo-page.php';
