@@ -20,7 +20,9 @@ jobs:
 
           # Copy plugin files (exclude development files)
           rsync -av \
-            --exclude='.git*' \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.gitignore' \
             --exclude='vendor' \
             --exclude='composer.json' \
             --exclude='composer.lock' \
