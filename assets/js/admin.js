@@ -1,6 +1,12 @@
 ( function( wp ) {
 	'use strict';
 
+	// Check if wp.abilities is available
+	if ( ! wp || ! wp.abilities || ! wp.abilities.executeAbility ) {
+		console.error( 'WP Abilities API is not available. Please ensure the Abilities API plugin is installed and activated.' );
+		return;
+	}
+
 	const { executeAbility } = wp.abilities;
 
 	/**

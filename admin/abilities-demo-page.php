@@ -39,7 +39,7 @@ function wp_abilities_demo_enqueue_assets( $hook ) {
 		'wp-abilities-demo-admin',
 		plugins_url( 'assets/css/admin.css', dirname( __FILE__ ) ),
 		array(),
-		'1.0.0'
+		filemtime( plugin_dir_path( dirname( __FILE__ ) ) . 'assets/css/admin.css' )
 	);
 
 	// Enqueue JavaScript - ensure wp-abilities is a dependency
@@ -47,7 +47,7 @@ function wp_abilities_demo_enqueue_assets( $hook ) {
 		'wp-abilities-demo-admin',
 		plugins_url( 'assets/js/admin.js', dirname( __FILE__ ) ),
 		array( 'wp-abilities' ),
-		'1.0.0',
+		filemtime( plugin_dir_path( dirname( __FILE__ ) ) . 'assets/js/admin.js' ),
 		true
 	);
 }
