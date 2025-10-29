@@ -194,13 +194,13 @@ add_action( 'abilities_api_init', function () {
  * @return array JSON response with security check results or error.
  */
 function ai_experiments_plugin_security_check( $input ) {
-	if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_SECURITY: Starting security check with input: ' . print_r( $input, true) );
 	}
 	
 	// Validate input
 	if ( empty( $input['plugin_slug'] ) ) {
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Plugin slug is empty or missing' );
 		}
 		return array(
@@ -210,18 +210,18 @@ function ai_experiments_plugin_security_check( $input ) {
 	}
 
 	$plugin_slug = sanitize_text_field( $input['plugin_slug'] );
-	if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_SECURITY: Sanitized plugin slug: ' . $plugin_slug );
 	}
 
 	// Check if Plugin Check plugin is available and active
 	$plugin_check_active = is_plugin_active( 'plugin-check/plugin.php' );
-	if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_SECURITY: Plugin Check active status: ' . ( $plugin_check_active ? 'true' : 'false' ) );
 	}
 	
 	if ( ! $plugin_check_active ) {
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Plugin Check plugin is not active' );
 		}
 		return array(
@@ -233,12 +233,12 @@ function ai_experiments_plugin_security_check( $input ) {
 
 	// Check if Plugin Check classes are available
 	$abstract_runner_exists = class_exists( 'WordPress\\Plugin_Check\\Checker\\Abstract_Check_Runner' );
-	if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_SECURITY: Abstract_Check_Runner class exists: ' . ( $abstract_runner_exists ? 'true' : 'false' ) );
 	}
 	
 	if ( ! $abstract_runner_exists ) {
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Plugin Check classes are not available' );
 		}
 		return array(
@@ -254,7 +254,7 @@ function ai_experiments_plugin_security_check( $input ) {
 	$plugin_dir_exists = file_exists( $plugin_dir_path );
 	$plugin_file_exists = file_exists( $plugin_file_path );
 	
-	if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_SECURITY: Checking plugin existence:' );
 		error_log( 'AI_EXPERIMENTS_SECURITY: - Plugin directory path: ' . $plugin_dir_path );
 		error_log( 'AI_EXPERIMENTS_SECURITY: - Plugin directory exists: ' . ( $plugin_dir_exists ? 'true' : 'false' ) );
@@ -263,7 +263,7 @@ function ai_experiments_plugin_security_check( $input ) {
 	}
 	
 	if ( ! $plugin_dir_exists && ! $plugin_file_exists ) {
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Plugin not found in either location' );
 		}
 		return array(
@@ -274,18 +274,18 @@ function ai_experiments_plugin_security_check( $input ) {
 	}
 
 	try {
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Entering try block for security check execution' );
 		}
 		
 		// Define the security check runner class if needed
 		$runner_defined = ai_experiments_define_security_check_runner();
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Security check runner definition result: ' . ( $runner_defined ? 'true' : 'false' ) );
 		}
 		
 		if ( ! $runner_defined ) {
-			if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 				error_log( 'AI_EXPERIMENTS_SECURITY: Failed to define security check runner' );
 			}
 			return array(
@@ -296,27 +296,27 @@ function ai_experiments_plugin_security_check( $input ) {
 		}
 
 		// Create security check runner
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Creating AI_Experiments_Security_Check_Runner instance' );
 		}
 		$runner = new AI_Experiments_Security_Check_Runner();
 		$runner->set_plugin_slug( $plugin_slug );
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Runner created and plugin slug set to: ' . $plugin_slug );
 		}
 		
 		// Prepare environment
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Calling runner->prepare()' );
 		}
 		$cleanup = $runner->prepare();
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Prepare() result type: ' . gettype( $cleanup ) );
 		}
 		
 		// Check if prepare() returned an error
 		if ( is_wp_error( $cleanup ) ) {
-			if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 				error_log( 'AI_EXPERIMENTS_SECURITY: prepare() returned WP_Error: ' . $cleanup->get_error_message() );
 			}
 			return array(
@@ -327,23 +327,23 @@ function ai_experiments_plugin_security_check( $input ) {
 		}
 
 		// Run security checks
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Calling runner->run()' );
 		}
 		$check_result = $runner->run();
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: run() completed, result type: ' . gettype( $check_result ) );
 		}
 		
 		// Check if run() returned an error
 		if ( is_wp_error( $check_result ) ) {
-			if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 				error_log( 'AI_EXPERIMENTS_SECURITY: run() returned WP_Error: ' . $check_result->get_error_message() );
 			}
 			// Clean up if possible
 			if ( is_callable( $cleanup ) ) {
 				$cleanup();
-				if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+				if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 					error_log( 'AI_EXPERIMENTS_SECURITY: Cleanup function called after run() error' );
 				}
 			}
@@ -357,17 +357,17 @@ function ai_experiments_plugin_security_check( $input ) {
 		// Clean up
 		if ( is_callable( $cleanup ) ) {
 			$cleanup();
-			if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 				error_log( 'AI_EXPERIMENTS_SECURITY: Cleanup function called successfully' );
 			}
 		}
 
 		// Transform Plugin Check results to our expected format
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Starting transformation of check results' );
 		}
 		$security_findings = ai_experiments_transform_check_results( $check_result );
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Transformation complete, findings count: ' . count( $security_findings ) );
 			error_log( print_r( $security_findings, true ) );
 		}
@@ -377,7 +377,7 @@ function ai_experiments_plugin_security_check( $input ) {
 		$warning_count = $check_result->get_warning_count();
 		$total_issues = $error_count + $warning_count;
 		
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Summary calculations:' );
 			error_log( 'AI_EXPERIMENTS_SECURITY: - Error count: ' . $error_count );
 			error_log( 'AI_EXPERIMENTS_SECURITY: - Warning count: ' . $warning_count );
@@ -392,7 +392,7 @@ function ai_experiments_plugin_security_check( $input ) {
 			}
 		}
 		$total_files_checked = count( $files_checked );
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Total files checked: ' . $total_files_checked );
 			error_log( 'AI_EXPERIMENTS_SECURITY: Security check completed successfully' );
 		}
@@ -409,7 +409,7 @@ function ai_experiments_plugin_security_check( $input ) {
 		);
 
 	} catch ( Exception $e ) {
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_SECURITY: Exception caught: ' . $e->getMessage() );
 			error_log( 'AI_EXPERIMENTS_SECURITY: Exception trace: ' . $e->getTraceAsString() );
 		}

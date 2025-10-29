@@ -87,13 +87,13 @@ add_action( 'abilities_api_init', function () {
  * @return array Result containing post ID and URL.
  */
 function mcp_server_create_post( $input ) {
-	if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_CREATE_POST: Starting post creation with input: ' . print_r( $input, true ) );
 	}
 
 	// Validate input
 	if ( ! isset( $input['title'], $input['content'] ) ) {
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_CREATE_POST: Invalid input - missing title or content' );
 		}
 		return array(
@@ -112,7 +112,7 @@ function mcp_server_create_post( $input ) {
 		: 'draft';
 	$current_user_id = get_current_user_id();
 	
-	if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_CREATE_POST: Sanitized values:' );
 		error_log( 'AI_EXPERIMENTS_CREATE_POST: - Title: ' . $sanitized_title );
 		error_log( 'AI_EXPERIMENTS_CREATE_POST: - Content length: ' . strlen( $sanitized_content ) );
@@ -128,14 +128,14 @@ function mcp_server_create_post( $input ) {
 		'post_author'  => $current_user_id,
 	);
 
-	if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_CREATE_POST: Calling wp_insert_post()' );
 	}
 	
 	$post_id = wp_insert_post( $post_data );
 	
 	if ( is_wp_error( $post_id ) ) {
-		if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 			error_log( 'AI_EXPERIMENTS_CREATE_POST: wp_insert_post() returned WP_Error: ' . $post_id->get_error_message() );
 		}
 		return array(
@@ -146,7 +146,7 @@ function mcp_server_create_post( $input ) {
 
 	$post_url = get_permalink( $post_id );
 	
-	if ( defined( 'WP_MCP_SERVER_DEBUG' ) && WP_MCP_SERVER_DEBUG ) {
+	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_CREATE_POST: Post created successfully' );
 		error_log( 'AI_EXPERIMENTS_CREATE_POST: - Post ID: ' . $post_id );
 		error_log( 'AI_EXPERIMENTS_CREATE_POST: - Post URL: ' . $post_url );
