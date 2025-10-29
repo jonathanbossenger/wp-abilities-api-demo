@@ -1,8 +1,8 @@
 <?php
 /**
- * Debug Log Reading Ability for AI Experiments MCP Server
+ * Debug Log Reading Ability
  *
- * @package AI_Experiments_MCP_Server
+ * @package WP_Abilities_API_Demo
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,15 +14,15 @@ add_action( 'abilities_api_init', function () {
 	wp_register_ability(
 		'debug/read-log',
 		array(
-			'label'               => __( 'Debug Log Reader', 'ai-experiments-mcp-server' ),
-			'description'         => __( 'Reads the contents of the WordPress debug.log file from wp-content directory.', 'ai-experiments-mcp-server' ),
+			'label'               => __( 'Debug Log Reader', 'wp-abilities-api-demo' ),
+			'description'         => __( 'Reads the contents of the WordPress debug.log file from wp-content directory.', 'wp-abilities-api-demo' ),
 			'category'            => 'abilities-api-demo',
 			'input_schema'        => array(
 				'type'       => 'object',
 				'properties' => array(
 					'lines' => array(
 						'type'        => 'integer',
-						'description' => __( 'Number of lines to read from the end of the file (default: 100, max: 1000)', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Number of lines to read from the end of the file (default: 100, max: 1000)', 'wp-abilities-api-demo' ),
 						'minimum'     => 1,
 						'maximum'     => 1000,
 						'default'     => 100,
@@ -34,27 +34,27 @@ add_action( 'abilities_api_init', function () {
 				'properties' => array(
 					'success' => array(
 						'type'        => 'boolean',
-						'description' => __( 'Whether the debug log reading completed successfully.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Whether the debug log reading completed successfully.', 'wp-abilities-api-demo' ),
 					),
 					'content' => array(
 						'type'        => 'string',
-						'description' => __( 'Contents of the debug log file.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Contents of the debug log file.', 'wp-abilities-api-demo' ),
 					),
 					'file_size' => array(
 						'type'        => 'integer',
-						'description' => __( 'Size of the debug log file in bytes.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Size of the debug log file in bytes.', 'wp-abilities-api-demo' ),
 					),
 					'file_path' => array(
 						'type'        => 'string',
-						'description' => __( 'Path to the debug log file.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Path to the debug log file.', 'wp-abilities-api-demo' ),
 					),
 					'lines_returned' => array(
 						'type'        => 'integer',
-						'description' => __( 'Number of lines actually returned.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Number of lines actually returned.', 'wp-abilities-api-demo' ),
 					),
 					'error'   => array(
 						'type'        => 'string',
-						'description' => __( 'Error message if the reading failed.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Error message if the reading failed.', 'wp-abilities-api-demo' ),
 					),
 				),
 			),
@@ -71,8 +71,8 @@ add_action( 'abilities_api_init', function () {
 	wp_register_ability(
 		'debug/clear-log',
 		array(
-			'label'               => __( 'Debug Log Clearer', 'ai-experiments-mcp-server' ),
-			'description'         => __( 'Clears the contents of the WordPress debug.log file from wp-content directory.', 'ai-experiments-mcp-server' ),
+			'label'               => __( 'Debug Log Clearer', 'wp-abilities-api-demo' ),
+			'description'         => __( 'Clears the contents of the WordPress debug.log file from wp-content directory.', 'wp-abilities-api-demo' ),
 			'category'            => 'abilities-api-demo',
 			'input_schema'        => array(),
 			'output_schema'       => array(
@@ -80,23 +80,23 @@ add_action( 'abilities_api_init', function () {
 				'properties' => array(
 					'success' => array(
 						'type'        => 'boolean',
-						'description' => __( 'Whether the debug log clearing completed successfully.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Whether the debug log clearing completed successfully.', 'wp-abilities-api-demo' ),
 					),
 					'file_path' => array(
 						'type'        => 'string',
-						'description' => __( 'Path to the debug log file.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Path to the debug log file.', 'wp-abilities-api-demo' ),
 					),
 					'previous_size' => array(
 						'type'        => 'integer',
-						'description' => __( 'Size of the debug log file before clearing in bytes.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Size of the debug log file before clearing in bytes.', 'wp-abilities-api-demo' ),
 					),
 					'message' => array(
 						'type'        => 'string',
-						'description' => __( 'Success or informational message.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Success or informational message.', 'wp-abilities-api-demo' ),
 					),
 					'error'   => array(
 						'type'        => 'string',
-						'description' => __( 'Error message if the clearing failed.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Error message if the clearing failed.', 'wp-abilities-api-demo' ),
 					),
 				),
 			),

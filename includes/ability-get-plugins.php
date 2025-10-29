@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin List Ability for AI Experiments MCP Server
+ * Plugin List Ability
  *
- * @package AI_Experiments_MCP_Server
+ * @package WP_Abilities_API_Demo
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,8 +14,8 @@ add_action( 'abilities_api_init', function () {
 	wp_register_ability(
 		'plugins/get-plugins',
 		array(
-			'label'               => __( 'Plugin List', 'ai-experiments-mcp-server' ),
-			'description'         => __( 'Retrieves a list of all installed WordPress plugins with their names and slugs.', 'ai-experiments-mcp-server' ),
+			'label'               => __( 'Plugin List', 'wp-abilities-api-demo' ),
+			'description'         => __( 'Retrieves a list of all installed WordPress plugins with their names and slugs.', 'wp-abilities-api-demo' ),
 			'category'            => 'abilities-api-demo',
 			'input_schema'        => array(),
 			'output_schema'       => array(
@@ -23,40 +23,40 @@ add_action( 'abilities_api_init', function () {
 				'properties' => array(
 					'success' => array(
 						'type'        => 'boolean',
-						'description' => __( 'Whether the plugin list retrieval completed successfully.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Whether the plugin list retrieval completed successfully.', 'wp-abilities-api-demo' ),
 					),
 					'plugins' => array(
 						'type'        => 'array',
-						'description' => __( 'List of installed plugins.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'List of installed plugins.', 'wp-abilities-api-demo' ),
 						'items'       => array(
 							'type'       => 'object',
 							'properties' => array(
 								'name'    => array(
 									'type'        => 'string',
-									'description' => __( 'Plugin name.', 'ai-experiments-mcp-server' )
+									'description' => __( 'Plugin name.', 'wp-abilities-api-demo' )
 								),
 								'slug'    => array(
 									'type'        => 'string',
-									'description' => __( 'Plugin slug/directory.', 'ai-experiments-mcp-server' )
+									'description' => __( 'Plugin slug/directory.', 'wp-abilities-api-demo' )
 								),
 								'file'    => array(
 									'type'        => 'string',
-									'description' => __( 'Main plugin file path.', 'ai-experiments-mcp-server' )
+									'description' => __( 'Main plugin file path.', 'wp-abilities-api-demo' )
 								),
 								'status'  => array(
 									'type'        => 'string',
-									'description' => __( 'Plugin status (active/inactive).', 'ai-experiments-mcp-server' )
+									'description' => __( 'Plugin status (active/inactive).', 'wp-abilities-api-demo' )
 								),
 								'version' => array(
 									'type'        => 'string',
-									'description' => __( 'Plugin version.', 'ai-experiments-mcp-server' )
+									'description' => __( 'Plugin version.', 'wp-abilities-api-demo' )
 								),
 							),
 						),
 					),
 					'error'   => array(
 						'type'        => 'string',
-						'description' => __( 'Error message if the retrieval failed.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Error message if the retrieval failed.', 'wp-abilities-api-demo' ),
 					),
 				),
 			),

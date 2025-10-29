@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Security Check Ability for AI Experiments MCP Server
+ * Plugin Security Check Ability
  *
- * @package AI_Experiments_MCP_Server
+ * @package WP_Abilities_API_Demo
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -122,15 +122,15 @@ add_action( 'abilities_api_init', function () {
 	wp_register_ability(
 		'plugin-check/check-security',
 		array(
-			'label'               => __( 'Plugin Security Check', 'ai-experiments-mcp-server' ),
-			'description'         => __( 'Analyzes WordPress plugins for security vulnerabilities and issues using Plugin Check security category checks.', 'ai-experiments-mcp-server' ),
+			'label'               => __( 'Plugin Security Check', 'wp-abilities-api-demo' ),
+			'description'         => __( 'Analyzes WordPress plugins for security vulnerabilities and issues using Plugin Check security category checks.', 'wp-abilities-api-demo' ),
 			'category'            => 'abilities-api-demo',
 			'input_schema'        => array(
 				'type'       => 'object',
 				'properties' => array(
 					'plugin_slug' => array(
 						'type'        => 'string',
-						'description' => __( 'The plugin slug/name to check (e.g., "akismet", "hello-dolly").', 'ai-experiments-mcp-server' ),
+						'description' => __( 'The plugin slug/name to check (e.g., "akismet", "hello-dolly").', 'wp-abilities-api-demo' ),
 					),
 				),
 				'required'   => array( 'plugin_slug' ),
@@ -140,15 +140,15 @@ add_action( 'abilities_api_init', function () {
 				'properties' => array(
 					'success'           => array(
 						'type'        => 'boolean',
-						'description' => __( 'Whether the security check completed successfully.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Whether the security check completed successfully.', 'wp-abilities-api-demo' ),
 					),
 					'plugin_slug'       => array(
 						'type'        => 'string',
-						'description' => __( 'The plugin that was checked.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'The plugin that was checked.', 'wp-abilities-api-demo' ),
 					),
 					'security_findings' => array(
 						'type'        => 'array',
-						'description' => __( 'Security issues found in the plugin.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Security issues found in the plugin.', 'wp-abilities-api-demo' ),
 						'items'       => array(
 							'type'       => 'object',
 							'properties' => array(
@@ -164,7 +164,7 @@ add_action( 'abilities_api_init', function () {
 					),
 					'summary'           => array(
 						'type'        => 'object',
-						'description' => __( 'Summary of security check results.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Summary of security check results.', 'wp-abilities-api-demo' ),
 						'properties'  => array(
 							'total_files_checked' => array( 'type' => 'integer' ),
 							'total_issues'        => array( 'type' => 'integer' ),
@@ -174,7 +174,7 @@ add_action( 'abilities_api_init', function () {
 					),
 					'error'             => array(
 						'type'        => 'string',
-						'description' => __( 'Error message if the check failed.', 'ai-experiments-mcp-server' ),
+						'description' => __( 'Error message if the check failed.', 'wp-abilities-api-demo' ),
 					),
 				),
 			),

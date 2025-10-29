@@ -1,8 +1,8 @@
 <?php
 /**
- * Create Post Ability for AI Experiments MCP Server
+ * Create Post Ability
  *
- * @package AI_Experiments_MCP_Server
+ * @package WP_Abilities_API_Demo
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Helper function to convert WP_Error to array format for MCP compatibility.
+ * Helper function to convert WP_Error to array format.
  *
  * @param WP_Error $wp_error The WP_Error object to convert.
  * @param string   $context  Optional context for the error.
@@ -32,23 +32,23 @@ function ai_experiments_wp_error_to_array( $wp_error, $context = '' ) {
 // Register an ability to create a post
 add_action( 'abilities_api_init', function () {
 	wp_register_ability( 'post/create-post', array(
-		'label'               => __( 'Create Post', 'mcp-server' ),
-		'description'         => __( 'Creates a new blog post with the provided content', 'mcp-server' ),
+		'label'               => __( 'Create Post', 'wp-abilities-api-demo' ),
+		'description'         => __( 'Creates a new blog post with the provided content', 'wp-abilities-api-demo' ),
 		'category'            => 'abilities-api-demo',
 		'input_schema'        => array(
 			'type'       => 'object',
 			'properties' => array(
 				'title'   => array(
 					'type'        => 'string',
-					'description' => __( 'The title of the post', 'mcp-server' )
+					'description' => __( 'The title of the post', 'wp-abilities-api-demo' )
 				),
 				'content' => array(
 					'type'        => 'string',
-					'description' => __( 'The content of the post. Must be valid block editor markup', 'mcp-server' )
+					'description' => __( 'The content of the post. Must be valid block editor markup', 'wp-abilities-api-demo' )
 				),
 				'status'  => array(
 					'type'        => 'string',
-					'description' => __( 'The status of the post', 'mcp-server' ),
+					'description' => __( 'The status of the post', 'wp-abilities-api-demo' ),
 					'default'     => 'draft',
 					'enum'        => array( 'draft', 'publish' )
 				)
@@ -60,19 +60,19 @@ add_action( 'abilities_api_init', function () {
 			'properties' => array(
 				'success' => array(
 					'type'        => 'boolean',
-					'description' => __( 'Whether the post creation completed successfully', 'mcp-server' )
+					'description' => __( 'Whether the post creation completed successfully', 'wp-abilities-api-demo' )
 				),
 				'url' => array(
 					'type'        => 'string',
-					'description' => __( 'The URL of the created post', 'mcp-server' )
+					'description' => __( 'The URL of the created post', 'wp-abilities-api-demo' )
 				),
 				'error' => array(
 					'type'        => 'string',
-					'description' => __( 'Error message if post creation failed', 'mcp-server' )
+					'description' => __( 'Error message if post creation failed', 'wp-abilities-api-demo' )
 				)
 			)
 		),
-		'execute_callback'    => 'mcp_server_create_post',
+		'execute_callback'    => 'wp_abilities_demo_create_post',
 		'permission_callback' => function ( $input ) {
 			return current_user_can( 'publish_posts' );
 		}
@@ -86,7 +86,7 @@ add_action( 'abilities_api_init', function () {
  *
  * @return array Result containing post ID and URL.
  */
-function mcp_server_create_post( $input ) {
+function wp_abilities_demo_create_post( $input ) {
 	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_CREATE_POST: Starting post creation with input: ' . print_r( $input, true ) );
 	}
@@ -98,7 +98,7 @@ function mcp_server_create_post( $input ) {
 		}
 		return array(
 			'success' => false,
-			'error'   => __( 'Invalid input data', 'mcp-server' ),
+			'error'   => __( 'Invalid input data', 'wp-abilities-api-demo' ),
 		);
 	}
 	
@@ -140,7 +140,7 @@ function mcp_server_create_post( $input ) {
 		}
 		return array(
 			'success' => false,
-			'error'   => __( 'Failed to create post', 'mcp-server' ) . ': ' . $post_id->get_error_message(),
+			'error'   => __( 'Failed to create post', 'wp-abilities-api-demo' ) . ': ' . $post_id->get_error_message(),
 		);
 	}
 

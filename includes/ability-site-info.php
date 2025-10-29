@@ -1,8 +1,8 @@
 <?php
 /**
- * Site Info Ability for AI Experiments MCP Server
+ * Site Info Ability
  *
- * @package AI_Experiments_MCP_Server
+ * @package WP_Abilities_API_Demo
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
