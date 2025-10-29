@@ -10,12 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Register the Site Info ability
-add_action( 'abilities_api_init', function(){
+add_action( 'wp_abilities_api_init', function(){
 	wp_register_ability( 'site/site-info', array(
 		'label' => __( 'Site Info', 'ai-experiments' ),
 		'description' => __( 'Returns information about this WordPress site', 'ai-experiments' ),
 		'category' => 'abilities-api-demo',
-		'input_schema' => array(),
 		'output_schema' => array(
 			'type' => 'object',
 			'properties' => array(
@@ -49,7 +48,7 @@ add_action( 'abilities_api_init', function(){
 			),
 		),
 		'execute_callback' => 'ai_experiments_get_siteinfo',
-		'permission_callback' => function( $input ) {
+		'permission_callback' => function() {
 			return current_user_can( 'manage_options' );
 		},
         'meta' => array(
@@ -60,6 +59,11 @@ add_action( 'abilities_api_init', function(){
 	));
 });
 
+/**
+ * Get Site Info
+ *
+ * @return array
+ */
 function ai_experiments_get_siteinfo(){
 	$site_info = array();
 	$site_info['site_name'] = get_bloginfo( 'name' );

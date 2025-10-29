@@ -118,7 +118,7 @@ function ai_experiments_define_security_check_runner() {
 }
 
 // Register the Plugin Security Check ability
-add_action( 'abilities_api_init', function () {
+add_action( 'wp_abilities_api_init', function () {
 	wp_register_ability(
 		'plugin-check/check-security',
 		array(

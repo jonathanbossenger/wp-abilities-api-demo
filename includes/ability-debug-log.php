@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Register the Debug Log Reading ability
-add_action( 'abilities_api_init', function () {
+add_action( 'wp_abilities_api_init', function () {
 	wp_register_ability(
 		'debug/read-log',
 		array(
@@ -61,20 +61,22 @@ add_action( 'abilities_api_init', function () {
 			'execute_callback'    => 'ai_experiments_read_debug_log',
 			'permission_callback' => function () {
 				return current_user_can( 'manage_options' );
-			}
+			},
+            'meta' => array(
+                'show_in_rest'  => true
+            )
 		)
 	);
 } );
 
 // Register the Debug Log Clear ability
-add_action( 'abilities_api_init', function () {
+add_action( 'wp_abilities_api_init', function () {
 	wp_register_ability(
 		'debug/clear-log',
 		array(
 			'label'               => __( 'Debug Log Clearer', 'wp-abilities-api-demo' ),
 			'description'         => __( 'Clears the contents of the WordPress debug.log file from wp-content directory.', 'wp-abilities-api-demo' ),
 			'category'            => 'abilities-api-demo',
-			'input_schema'        => array(),
 			'output_schema'       => array(
 				'type'       => 'object',
 				'properties' => array(
@@ -230,11 +232,9 @@ function ai_experiments_read_debug_log( $input ) {
 /**
  * Clear the WordPress debug.log file contents.
  *
- * @param array $input Input parameters (none required for clearing).
- *
  * @return array JSON response with clearing status or error.
  */
-function ai_experiments_clear_debug_log( $input ) {
+function ai_experiments_clear_debug_log() {
 	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'WP_ABILITIES_API_DEMO_DEBUG_LOG: Starting debug log clear with input: ' . print_r( $input, true ) );
 	}

@@ -30,7 +30,7 @@ function ai_experiments_wp_error_to_array( $wp_error, $context = '' ) {
 }
 
 // Register an ability to create a post
-add_action( 'abilities_api_init', function () {
+add_action( 'wp_abilities_api_init', function () {
 	wp_register_ability( 'post/create-post', array(
 		'label'               => __( 'Create Post', 'wp-abilities-api-demo' ),
 		'description'         => __( 'Creates a new blog post with the provided content', 'wp-abilities-api-demo' ),

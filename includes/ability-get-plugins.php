@@ -10,14 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Register the Plugin List ability
-add_action( 'abilities_api_init', function () {
+add_action( 'wp_abilities_api_init', function () {
 	wp_register_ability(
 		'plugins/get-plugins',
 		array(
 			'label'               => __( 'Plugin List', 'wp-abilities-api-demo' ),
 			'description'         => __( 'Retrieves a list of all installed WordPress plugins with their names and slugs.', 'wp-abilities-api-demo' ),
 			'category'            => 'abilities-api-demo',
-			'input_schema'        => array(),
 			'output_schema'       => array(
 				'type'       => 'object',
 				'properties' => array(
@@ -74,11 +73,9 @@ add_action( 'abilities_api_init', function () {
 /**
  * Retrieve list of all installed WordPress plugins.
  *
- * @param array $input Input parameters (unused).
- *
  * @return array JSON response with plugin list or error.
  */
-function ai_experiments_get_plugin_list( $input ) {
+function ai_experiments_get_plugin_list() {
 	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
 		error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Starting plugin list retrieval with input: ' . print_r( $input, true ) );
 	}

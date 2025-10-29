@@ -38,7 +38,6 @@
 		// Prepare input based on ability
 		const input = prepareAbilityInput( abilityName, section );
 
-		// Validate required inputs
 		if ( input === null ) {
 			displayError( outputEl, 'Please fill in all required fields.' );
 			return;
@@ -71,7 +70,7 @@
 	 * @return {Object|null} The input object or null if validation fails.
 	 */
 	function prepareAbilityInput( abilityName, section ) {
-		const input = {};
+		let input = {};
 
 		switch ( abilityName ) {
 			case 'site/site-info':
@@ -120,6 +119,9 @@
 				break;
 		}
 
+        // if the input is an empty object, set it to undefined
+        // Abilities with no input_schema defined should not receive any input
+        input = Object.keys( input ).length === 0 ? undefined : input;
 		return input;
 	}
 

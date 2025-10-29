@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Register the abilities-api-demo category
-add_action( 'abilities_api_categories_init', function () {
+add_action( 'wp_abilities_api_categories_init', function () {
 	wp_register_ability_category( 'abilities-api-demo', array(
 		'label'       => __( 'Abilities API Demo', 'wp-abilities-api-demo' ),
 		'description' => __( 'Demo abilities for the WordPress Abilities API.', 'wp-abilities-api-demo' ),
