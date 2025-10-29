@@ -53,8 +53,9 @@ add_action( 'abilities_api_init', function(){
 			return current_user_can( 'manage_options' );
 		},
         'meta' => array(
-            'mimeType' => 'application/json',
-            'uri'      => 'site://wordpress/site-info',
+            'show_in_rest'  => true,
+            'mimeType'      => 'application/json',
+            'uri'           => 'site://wordpress/site-info',
         ),
 	));
 });
