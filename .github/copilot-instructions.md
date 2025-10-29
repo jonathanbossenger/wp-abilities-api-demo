@@ -173,17 +173,19 @@ Before finalizing changes:
 
 ## File Manifest
 
-**Root directory** (10 files excluding vendor):
-- wp-abilities-api-demo.php
-- composer.json
-- composer.lock
-- .gitignore
-- includes/category-abilities-api-demo.php
-- includes/ability-site-info.php
-- includes/ability-get-plugins.php
-- includes/ability-debug-log.php
-- includes/ability-create-post.php
-- includes/ability-check-security.php
+**Root directory** (4 files excluding vendor):
+- `wp-abilities-api-demo.php` - Main plugin file
+- `composer.json` - Dependency configuration
+- `composer.lock` - Locked dependency versions
+- `.gitignore` - Git ignore rules
+
+**includes/ directory** (6 files):
+- `category-abilities-api-demo.php` - Category registration
+- `ability-site-info.php` - Site info ability
+- `ability-get-plugins.php` - Plugin list ability
+- `ability-debug-log.php` - Debug log abilities
+- `ability-create-post.php` - Post creation ability
+- `ability-check-security.php` - Security check ability
 
 ## Additional Notes
 
