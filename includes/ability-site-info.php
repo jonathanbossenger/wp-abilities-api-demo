@@ -1,8 +1,8 @@
 <?php
 /**
- * Site Info Ability for AI Experiments MCP Server
+ * Site Info Ability
  *
- * @package AI_Experiments_MCP_Server
+ * @package WP_Abilities_API_Demo
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,7 +14,7 @@ add_action( 'abilities_api_init', function(){
 	wp_register_ability( 'site/site-info', array(
 		'label' => __( 'Site Info', 'ai-experiments' ),
 		'description' => __( 'Returns information about this WordPress site', 'ai-experiments' ),
-		'category' => 'mcp-server-demo',
+		'category' => 'abilities-api-demo',
 		'input_schema' => array(),
 		'output_schema' => array(
 			'type' => 'object',
