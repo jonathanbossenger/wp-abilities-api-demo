@@ -1,0 +1,45 @@
+name: Build Plugin Release
+
+on:
+  release:
+    types: [created, published]
+
+jobs:
+  build:
+    name: Build Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create plugin zip
+        run: |
+          # Create a temporary directory for the plugin
+          mkdir -p /tmp/wp-abilities-api-demo
+
+          # Copy plugin files (exclude development files)
+          rsync -av \
+            --exclude='.git*' \
+            --exclude='vendor' \
+            --exclude='composer.json' \
+            --exclude='composer.lock' \
+            --exclude='node_modules' \
+            ./ /tmp/wp-abilities-api-demo/
+
+          # Create zip file
+          cd /tmp
+          zip -r wp-abilities-api-demo.zip wp-abilities-api-demo
+
+          # Move zip to workspace
+          mv wp-abilities-api-demo.zip $GITHUB_WORKSPACE/
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./wp-abilities-api-demo.zip
+          asset_name: wp-abilities-api-demo.zip
+          asset_content_type: application/zip
