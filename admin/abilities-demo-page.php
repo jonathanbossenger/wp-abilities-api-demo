@@ -9,10 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// Hook registrations
 add_action( 'admin_menu', 'wp_abilities_demo_register_admin_page' );
-add_action( 'admin_enqueue_scripts', 'wp_abilities_demo_enqueue_assets' );
-
 /**
  * Register the admin page in the Tools menu.
  */
@@ -26,6 +23,7 @@ function wp_abilities_demo_register_admin_page() {
 	);
 }
 
+add_action( 'admin_enqueue_scripts', 'wp_abilities_demo_enqueue_assets' );
 /**
  * Enqueue scripts and styles for the admin page.
  *
