@@ -75,7 +75,10 @@ add_action( 'abilities_api_init', function () {
 		'execute_callback'    => 'wp_abilities_demo_create_post',
 		'permission_callback' => function ( $input ) {
 			return current_user_can( 'publish_posts' );
-		}
+		},
+        'meta' => array(
+            'show_in_rest'  => true
+        )
 	) );
 } );
 

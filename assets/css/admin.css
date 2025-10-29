@@ -1,0 +1,91 @@
+/**
+ * Abilities API Demo Admin Page Styles
+ */
+
+.ability-section {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-radius: 4px;
+	padding: 20px;
+	margin: 20px 0;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.ability-section h2 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	font-size: 1.3em;
+}
+
+.ability-section .description {
+	color: #646970;
+	font-size: 13px;
+	margin-bottom: 15px;
+}
+
+.ability-input-group {
+	margin: 15px 0;
+}
+
+.ability-input-group label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+
+.ability-input-group .required {
+	color: #d63638;
+}
+
+.ability-input-group input[type="text"],
+.ability-input-group input[type="number"],
+.ability-input-group textarea,
+.ability-input-group select {
+	margin-bottom: 5px;
+}
+
+.ability-input-group .description {
+	margin-top: 5px;
+	margin-bottom: 0;
+	font-style: italic;
+}
+
+.ability-loading {
+	display: inline-flex;
+	align-items: center;
+	margin-left: 10px;
+	color: #646970;
+}
+
+.ability-loading .spinner {
+	float: none;
+	margin: 0 5px 0 0;
+}
+
+.ability-output {
+	margin-top: 15px;
+}
+
+.ability-result {
+	background: #f6f7f7;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 15px;
+	overflow-x: auto;
+	max-height: 500px;
+	overflow-y: auto;
+	font-family: Consolas, Monaco, monospace;
+	font-size: 13px;
+	line-height: 1.6;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+.ability-output .notice {
+	margin: 0;
+	padding: 10px 15px;
+}
+
+.ability-output .notice p {
+	margin: 0.5em 0;
+}

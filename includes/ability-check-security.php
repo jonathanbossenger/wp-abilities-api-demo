@@ -181,7 +181,10 @@ add_action( 'abilities_api_init', function () {
 			'execute_callback'    => 'ai_experiments_plugin_security_check',
 			'permission_callback' => function () {
 				return current_user_can( 'manage_options' );
-			}
+			},
+            'meta' => array(
+                'show_in_rest'  => true
+            )
 		)
 	);
 } );
