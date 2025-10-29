@@ -9,19 +9,12 @@
             "email": "jonathanbossenger@gmail.com"
         }
     ],
-    "require": {
-        "wordpress/abilities-api": "^0.3.0",
-        "wordpress/mcp-adapter": "dev-trunk"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/WordPress/mcp-adapter"
-        }
-    ],
     "config": {
         "allow-plugins": {
-            "automattic/jetpack-autoloader": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^3.0"
     }
 }
