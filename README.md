@@ -87,7 +87,7 @@ Create a new blog post with specified title, content, and status (draft or publi
 - `content` (required): Post content in block editor markup
 - `status` (optional): Either `draft` or `publish` (defaults to `draft`)
 
-### Check Security (`security/check-security`)
+### Check Security (`plugin-check/check-security`)
 Run security checks on your WordPress installation using the Plugin Check plugin.
 
 ## Contributing
