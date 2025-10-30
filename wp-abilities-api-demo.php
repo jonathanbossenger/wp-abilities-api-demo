@@ -3,7 +3,7 @@
  * Plugin Name: WP Abilities API Demo
  * Description: Demonstrates the WordPress Abilities API with various example abilities.
  * Version: 1.0.0
- * Requires Plugins: plugin-check
+ * Requires Plugins: plugin-check, abilities-api
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

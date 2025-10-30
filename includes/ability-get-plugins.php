@@ -67,6 +67,7 @@ add_action( 'wp_abilities_api_init', function () {
                 'show_in_rest'  => true,
                 'mcp'           => array(
                     'public' => true,
+                    'type'   => 'tool'
                 ),
             )
 		)
