@@ -55,6 +55,9 @@ add_action( 'wp_abilities_api_init', function(){
             'show_in_rest'  => true,
             'mimeType'      => 'application/json',
             'uri'           => 'site://wordpress/site-info',
+            'mcp'           => array(
+                'public' => true,
+            ),
         ),
 	));
 });
