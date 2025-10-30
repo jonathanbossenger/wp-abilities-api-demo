@@ -49,6 +49,19 @@ Once activated, access the demo interface from your WordPress admin:
 3. Provide any required input parameters
 4. Execute the ability and view the results
 
+## Using with MCP-Enabled AI Applications
+
+The abilities demonstrated in this plugin can be converted into MCP (Model Context Protocol) tools for use with MCP-enabled AI applications and agents. This allows you to integrate WordPress functionality directly into AI assistants like Claude, Copilot, and other MCP-compatible tools.
+
+To learn how to convert WordPress abilities into MCP tools, check out the **[WP MCP Server Demo](https://github.com/jonathanbossenger/wp-mcp-server-demo)** repository. This companion project demonstrates:
+
+- How to create an MCP server that exposes WordPress abilities as tools
+- Converting ability schemas into MCP tool definitions
+- Integrating WordPress capabilities with AI assistants
+- Example implementations for common WordPress operations
+
+This integration enables AI agents to interact with your WordPress site programmatically, opening up possibilities for AI-assisted content management, site administration, and custom workflows.
+
 ## Available Abilities
 
 ### Site Info (`site/site-info`)
