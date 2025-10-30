@@ -62,6 +62,37 @@ To learn how to convert WordPress abilities into MCP tools, check out the **[WP 
 
 This integration enables AI agents to interact with your WordPress site programmatically, opening up possibilities for AI-assisted content management, site administration, and custom workflows.
 
+### Auto-Exposed MCP Tools
+
+Certain abilities in this plugin are automatically exposed as MCP tools when the **[WP MCP Server Demo](https://github.com/jonathanbossenger/wp-mcp-server-demo)** plugin is activated. These abilities are marked for automatic exposure through MCP metadata configuration in their registration.
+
+**How It Works**
+
+Abilities are enabled for automatic MCP exposure by including specific metadata in their registration:
+
+```php
+'meta' => array(
+    'show_in_rest' => true,
+    'mcp' => array(
+        'public' => true,
+        'type'   => 'tool'
+    ),
+)
+```
+
+When an ability includes `'mcp' => array( 'public' => true )` in its meta configuration, the WP MCP Server Demo plugin automatically registers it as an available tool that MCP-enabled AI applications can discover and use.
+
+**Auto-Exposed Abilities**
+
+The following abilities are configured for automatic MCP exposure:
+
+- **Site Info** (`site/site-info`) - Retrieve comprehensive WordPress site information
+- **Get Plugins** (`plugins/get-plugins`) - List all installed plugins with details
+- **Read Debug Log** (`debug/read-log`) - View contents of the WordPress debug log
+- **Clear Debug Log** (`debug/clear-log`) - Clear the WordPress debug log file
+
+These abilities can be immediately used by AI agents when both this plugin and the WP MCP Server Demo plugin are activated, without requiring any additional configuration.
+
 ## Available Abilities
 
 ### Site Info (`site/site-info`)
