@@ -64,7 +64,10 @@ add_action( 'wp_abilities_api_init', function () {
 				return current_user_can( 'manage_options' );
 			},
             'meta' => array(
-                'show_in_rest'  => true
+                'show_in_rest'  => true,
+                'mcp'           => array(
+                    'public' => true,
+                ),
             )
 		)
 	);
