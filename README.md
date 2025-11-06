@@ -19,7 +19,8 @@ The WP Abilities API Demo plugin showcases how to register and use abilities thr
 
 - WordPress (latest version recommended)
 - PHP 8.3.6 or higher
-- [Plugin Check](https://wordpress.org/plugins/plugin-check/) plugin (for security checking ability)
+- [Composer](https://getcomposer.org/) (for plugin dependencies)
+- [Plugin Check](https://wordpress.org/plugins/plugin-check/) plugin (for plugin checking ability)
 
 ## Installation
 
@@ -29,7 +30,7 @@ The WP Abilities API Demo plugin showcases how to register and use abilities thr
    git clone https://github.com/jonathanbossenger/wp-abilities-api-demo.git
    ```
 
-2. Install development dependencies (optional, for linting):
+2. Install dependencies using Composer:
    ```bash
    cd wp-abilities-api-demo
    composer install
@@ -183,4 +184,4 @@ Jonathan Bossenger - [jonathanbossenger@gmail.com](mailto:jonathanbossenger@gmai
 
 ## Credits
 
-Built with the WordPress Abilities API.
+Built with the [WordPress Abilities API](https://github.com/WordPress/abilities-api/).

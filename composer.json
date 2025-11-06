@@ -16,5 +16,8 @@
     },
     "require-dev": {
         "wp-coding-standards/wpcs": "^3.0"
+    },
+    "require": {
+        "wordpress/abilities-api": "^0.4.0"
     }
 }
