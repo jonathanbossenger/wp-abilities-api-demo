@@ -66,7 +66,7 @@ add_action( 'wp_abilities_api_init', function () {
             'meta' => array(
                 'show_in_rest'  => true,
                 'mcp'           => array(
-                    'public' => true,
+                    'public' => true, // make this ability publicly accessible on the default MCP server
                     'type'   => 'tool'
                 ),
             )

@@ -56,7 +56,7 @@ add_action( 'wp_abilities_api_init', function(){
             'mimeType'      => 'application/json',
             'uri'           => 'site://wordpress/site-info',
             'mcp'           => array(
-                'public' => true,
+                'public' => true, // make this ability publicly accessible on the default MCP server
                 'type'   => 'tool'
             ),
         ),
