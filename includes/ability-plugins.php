@@ -517,6 +517,10 @@ add_action(
 						'public' => true,
 						'type'   => 'tool',
 					),
+					'annotations' => array(
+						'destructive' => true,
+						'idempotent' => true,
+					),
 				),
 			)
 		);
