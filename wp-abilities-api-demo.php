@@ -34,6 +34,9 @@ if ( ! defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) ) {
 	define( 'WP_ABILITIES_API_DEMO_DEBUG', false );
 }
 
+// Include logger.
+require_once __DIR__ . '/includes/logger.php';
+
 // Include ability files.
 require_once __DIR__ . '/includes/category-abilities-api-demo.php';
 require_once __DIR__ . '/includes/ability-site-info.php';

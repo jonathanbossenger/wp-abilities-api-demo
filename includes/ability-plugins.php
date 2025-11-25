@@ -83,41 +83,29 @@ add_action(
  * @return array JSON response with plugin list or error.
  */
 function ai_experiments_get_plugin_list() {
-	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-		error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Starting plugin list retrieval with input: ' . print_r( $input, true ) );
-	}
+	wp_abilities_demo_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Starting plugin list retrieval' );
 
 	try {
 		// Check if get_plugins function is available
 		$get_plugins_exists = function_exists( 'get_plugins' );
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: get_plugins function exists: ' . ( $get_plugins_exists ? 'true' : 'false' ) );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_PLUGIN_LIST: get_plugins function exists: ' . ( $get_plugins_exists ? 'true' : 'false' ) );
 
 		if ( ! $get_plugins_exists ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Loading plugin.php from wp-admin/includes' );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Loading plugin.php from wp-admin/includes' );
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
 		// Get all installed plugins
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Calling get_plugins()' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Calling get_plugins()' );
 		$all_plugins  = get_plugins();
 		$plugin_count = count( $all_plugins );
 
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Found ' . $plugin_count . ' total plugins' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Found ' . $plugin_count . ' total plugins' );
 
 		$active_plugins = get_option( 'active_plugins', array() );
 		$active_count   = count( $active_plugins );
 
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Found ' . $active_count . ' active plugins' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Found ' . $active_count . ' active plugins' );
 
 		$network_active = array();
 		$is_multisite   = is_multisite();
@@ -126,11 +114,9 @@ function ai_experiments_get_plugin_list() {
 		if ( $is_multisite ) {
 			$network_active = get_site_option( 'active_sitewide_plugins', array() );
 			$network_count  = count( $network_active );
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Multisite detected, found ' . $network_count . ' network active plugins' );
-			}
-		} elseif ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Single site installation' );
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Multisite detected, found ' . $network_count . ' network active plugins' );
+		} else {
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Single site installation' );
 		}
 
 		$plugins = array();
@@ -157,15 +143,11 @@ function ai_experiments_get_plugin_list() {
 				'version' => $plugin_data['Version'],
 			);
 
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Processed plugin: ' . $plugin_data['Name'] . ' (' . $plugin_slug . ') - ' . $status );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Processed plugin: ' . $plugin_data['Name'] . ' (' . $plugin_slug . ') - ' . $status );
 		}
 
 		$final_count = count( $plugins );
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Plugin list retrieval completed successfully with ' . $final_count . ' plugins' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Plugin list retrieval completed successfully with ' . $final_count . ' plugins' );
 
 		return array(
 			'success' => true,
@@ -173,10 +155,12 @@ function ai_experiments_get_plugin_list() {
 		);
 
 	} catch ( Exception $e ) {
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Exception caught: ' . $e->getMessage() );
-			error_log( 'AI_EXPERIMENTS_PLUGIN_LIST: Exception trace: ' . $e->getTraceAsString() );
-		}
+		wp_abilities_demo_log(
+			array(
+				'AI_EXPERIMENTS_PLUGIN_LIST: Exception caught: ' . $e->getMessage(),
+				'AI_EXPERIMENTS_PLUGIN_LIST: Exception trace: ' . $e->getTraceAsString(),
+			)
+		);
 		return array(
 			'success' => false,
 			'error'   => 'Failed to retrieve plugin list: ' . $e->getMessage(),
@@ -245,15 +229,11 @@ add_action(
  * @return array JSON response with success status and message or error.
  */
 function ai_experiments_install_plugin( $input ) {
-	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-		error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Starting plugin installation with input: ' . print_r( $input, true ) );
-	}
+	wp_abilities_demo_log( array( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Starting plugin installation with input:', $input ) );
 
 	// Validate input
 	if ( ! isset( $input['slug'] ) || empty( $input['slug'] ) ) {
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Invalid input - missing slug' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Invalid input - missing slug' );
 		return array(
 			'success' => false,
 			'error'   => __( 'Plugin slug is required.', 'wp-abilities-api-demo' ),
@@ -262,9 +242,7 @@ function ai_experiments_install_plugin( $input ) {
 
 	$slug = sanitize_text_field( $input['slug'] );
 
-	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-		error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Sanitized slug: ' . $slug );
-	}
+	wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Sanitized slug: ' . $slug );
 
 	try {
 		// Load required WordPress files
@@ -281,9 +259,7 @@ function ai_experiments_install_plugin( $input ) {
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 		}
 
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Required files loaded' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Required files loaded' );
 
 		// Check if plugin is already installed
 		$all_plugins = get_plugins();
@@ -301,25 +277,19 @@ function ai_experiments_install_plugin( $input ) {
 		}
 
 		if ( $plugin_file ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Plugin already installed: ' . $plugin_file );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Plugin already installed: ' . $plugin_file );
 
 			// Plugin already installed, just activate it
 			$result = activate_plugin( $plugin_file );
 			if ( is_wp_error( $result ) ) {
-				if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-					error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Activation failed: ' . $result->get_error_message() );
-				}
+				wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Activation failed: ' . $result->get_error_message() );
 				return array(
 					'success' => false,
 					'error'   => __( 'Failed to activate plugin: ', 'wp-abilities-api-demo' ) . $result->get_error_message(),
 				);
 			}
 
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Plugin activated successfully' );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Plugin activated successfully' );
 
 			return array(
 				'success' => true,
@@ -332,9 +302,7 @@ function ai_experiments_install_plugin( $input ) {
 		}
 
 		// Get plugin information from WordPress.org
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Fetching plugin info from WordPress.org' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Fetching plugin info from WordPress.org' );
 
 		$api = plugins_api(
 			'plugin_information',
@@ -359,9 +327,7 @@ function ai_experiments_install_plugin( $input ) {
 		);
 
 		if ( is_wp_error( $api ) ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: plugins_api() failed: ' . $api->get_error_message() );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: plugins_api() failed: ' . $api->get_error_message() );
 			return array(
 				'success' => false,
 				'error'   => sprintf(
@@ -372,9 +338,7 @@ function ai_experiments_install_plugin( $input ) {
 			);
 		}
 
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Plugin info retrieved, downloading from: ' . $api->download_link );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Plugin info retrieved, downloading from: ' . $api->download_link );
 
 		// Install the plugin
 		$skin     = new WP_Ajax_Upgrader_Skin();
@@ -382,9 +346,7 @@ function ai_experiments_install_plugin( $input ) {
 		$result   = $upgrader->install( $api->download_link );
 
 		if ( is_wp_error( $result ) ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Installation failed: ' . $result->get_error_message() );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Installation failed: ' . $result->get_error_message() );
 			return array(
 				'success' => false,
 				'error'   => sprintf(
@@ -396,25 +358,19 @@ function ai_experiments_install_plugin( $input ) {
 		}
 
 		if ( ! $result ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Installation failed with no error message' );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Installation failed with no error message' );
 			return array(
 				'success' => false,
 				'error'   => __( 'Failed to install plugin.', 'wp-abilities-api-demo' ),
 			);
 		}
 
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Plugin installed successfully' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Plugin installed successfully' );
 
 		// Get the plugin file from the upgrader
 		$plugin_file = $upgrader->plugin_info();
 		if ( ! $plugin_file ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Could not determine plugin file after installation' );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Could not determine plugin file after installation' );
 			return array(
 				'success' => false,
 				'error'   => __( 'Plugin installed but could not determine plugin file for activation.', 'wp-abilities-api-demo' ),
@@ -422,15 +378,11 @@ function ai_experiments_install_plugin( $input ) {
 		}
 
 		// Activate the plugin
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Activating plugin: ' . $plugin_file );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Activating plugin: ' . $plugin_file );
 
 		$activate_result = activate_plugin( $plugin_file );
 		if ( is_wp_error( $activate_result ) ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Activation failed: ' . $activate_result->get_error_message() );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Activation failed: ' . $activate_result->get_error_message() );
 			return array(
 				'success' => false,
 				'error'   => sprintf(
@@ -441,9 +393,7 @@ function ai_experiments_install_plugin( $input ) {
 			);
 		}
 
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Plugin installed and activated successfully' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Plugin installed and activated successfully' );
 
 		return array(
 			'success' => true,
@@ -455,10 +405,12 @@ function ai_experiments_install_plugin( $input ) {
 		);
 
 	} catch ( Exception $e ) {
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Exception caught: ' . $e->getMessage() );
-			error_log( 'AI_EXPERIMENTS_INSTALL_PLUGIN: Exception trace: ' . $e->getTraceAsString() );
-		}
+		wp_abilities_demo_log(
+			array(
+				'AI_EXPERIMENTS_INSTALL_PLUGIN: Exception caught: ' . $e->getMessage(),
+				'AI_EXPERIMENTS_INSTALL_PLUGIN: Exception trace: ' . $e->getTraceAsString(),
+			)
+		);
 		return array(
 			'success' => false,
 			'error'   => sprintf(
@@ -535,15 +487,11 @@ add_action(
  * @return array JSON response with success status and message or error.
  */
 function ai_experiments_delete_plugin( $input ) {
-	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-		error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Starting plugin deletion with input: ' . print_r( $input, true ) );
-	}
+	wp_abilities_demo_log( array( 'AI_EXPERIMENTS_DELETE_PLUGIN: Starting plugin deletion with input:', $input ) );
 
 	// Validate input
 	if ( ! isset( $input['slug'] ) || empty( $input['slug'] ) ) {
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Invalid input - missing slug' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Invalid input - missing slug' );
 		return array(
 			'success' => false,
 			'error'   => __( 'Plugin slug is required.', 'wp-abilities-api-demo' ),
@@ -552,9 +500,7 @@ function ai_experiments_delete_plugin( $input ) {
 
 	$slug = sanitize_text_field( $input['slug'] );
 
-	if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-		error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Sanitized slug: ' . $slug );
-	}
+	wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Sanitized slug: ' . $slug );
 
 	try {
 		// Load required WordPress files
@@ -565,9 +511,7 @@ function ai_experiments_delete_plugin( $input ) {
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 		}
 
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Required files loaded' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Required files loaded' );
 
 		// Find the plugin file
 		$all_plugins = get_plugins();
@@ -586,9 +530,7 @@ function ai_experiments_delete_plugin( $input ) {
 
 		// Idempotency: If plugin doesn't exist, return success
 		if ( ! $plugin_file ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Plugin not found, returning success (idempotent)' );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Plugin not found, returning success (idempotent)' );
 			return array(
 				'success' => true,
 				'message' => sprintf(
@@ -599,48 +541,36 @@ function ai_experiments_delete_plugin( $input ) {
 			);
 		}
 
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Found plugin file: ' . $plugin_file );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Found plugin file: ' . $plugin_file );
 
 		// Check if plugin is active
 		if ( is_plugin_active( $plugin_file ) ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Plugin is active, deactivating' );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Plugin is active, deactivating' );
 
 			// Deactivate the plugin
 			deactivate_plugins( $plugin_file );
 
 			// Verify deactivation
 			if ( is_plugin_active( $plugin_file ) ) {
-				if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-					error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Failed to deactivate plugin' );
-				}
+				wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Failed to deactivate plugin' );
 				return array(
 					'success' => false,
 					'error'   => __( 'Failed to deactivate plugin before deletion.', 'wp-abilities-api-demo' ),
 				);
 			}
 
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Plugin deactivated successfully' );
-			}
-		} elseif ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Plugin is not active' );
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Plugin deactivated successfully' );
+		} else {
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Plugin is not active' );
 		}
 
 		// Delete the plugin
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Deleting plugin' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Deleting plugin' );
 
 		$result = delete_plugins( array( $plugin_file ) );
 
 		if ( is_wp_error( $result ) ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Deletion failed: ' . $result->get_error_message() );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Deletion failed: ' . $result->get_error_message() );
 			return array(
 				'success' => false,
 				'error'   => sprintf(
@@ -652,18 +582,14 @@ function ai_experiments_delete_plugin( $input ) {
 		}
 
 		if ( ! $result ) {
-			if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-				error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Deletion failed with no error message' );
-			}
+			wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Deletion failed with no error message' );
 			return array(
 				'success' => false,
 				'error'   => __( 'Failed to delete plugin.', 'wp-abilities-api-demo' ),
 			);
 		}
 
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Plugin deleted successfully' );
-		}
+		wp_abilities_demo_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Plugin deleted successfully' );
 
 		return array(
 			'success' => true,
@@ -675,10 +601,12 @@ function ai_experiments_delete_plugin( $input ) {
 		);
 
 	} catch ( Exception $e ) {
-		if ( defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) && WP_ABILITIES_API_DEMO_DEBUG ) {
-			error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Exception caught: ' . $e->getMessage() );
-			error_log( 'AI_EXPERIMENTS_DELETE_PLUGIN: Exception trace: ' . $e->getTraceAsString() );
-		}
+		wp_abilities_demo_log(
+			array(
+				'AI_EXPERIMENTS_DELETE_PLUGIN: Exception caught: ' . $e->getMessage(),
+				'AI_EXPERIMENTS_DELETE_PLUGIN: Exception trace: ' . $e->getTraceAsString(),
+			)
+		);
 		return array(
 			'success' => false,
 			'error'   => sprintf(
