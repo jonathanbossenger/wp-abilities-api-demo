@@ -230,7 +230,7 @@ The main plugin file includes required WordPress headers that define the plugin.
 /**
  * Plugin Name: WP Abilities API Demo
  * Description: Demonstrates the WordPress Abilities API with various example abilities.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Requires Plugins: plugin-check
  */
 ```
