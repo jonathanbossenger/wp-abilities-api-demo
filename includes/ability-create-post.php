@@ -90,11 +90,11 @@ add_action( 'wp_abilities_api_init', function () {
  * @return array Result containing post ID and URL.
  */
 function wp_abilities_demo_create_post( $input ) {
-	wp_abilities_demo_log( array( 'AI_EXPERIMENTS_CREATE_POST: Starting post creation with input:', $input ) );
+	wp_abilities_demo_log( array( 'WP_ABILITIES_API_DEMO_CREATE_POST: Starting post creation with input:', $input ) );
 
 	// Validate input
 	if ( ! isset( $input['title'], $input['content'] ) ) {
-		wp_abilities_demo_log( 'AI_EXPERIMENTS_CREATE_POST: Invalid input - missing title or content' );
+		wp_abilities_demo_log( 'WP_ABILITIES_API_DEMO_CREATE_POST: Invalid input - missing title or content' );
 		return array(
 			'success' => false,
 			'error'   => __( 'Invalid input data', 'wp-abilities-api-demo' ),
@@ -113,11 +113,11 @@ function wp_abilities_demo_create_post( $input ) {
 
 	wp_abilities_demo_log(
 		array(
-			'AI_EXPERIMENTS_CREATE_POST: Sanitized values:',
-			'AI_EXPERIMENTS_CREATE_POST: - Title: ' . $sanitized_title,
-			'AI_EXPERIMENTS_CREATE_POST: - Content length: ' . strlen( $sanitized_content ),
-			'AI_EXPERIMENTS_CREATE_POST: - Status: ' . $sanitized_status,
-			'AI_EXPERIMENTS_CREATE_POST: - Author ID: ' . $current_user_id,
+			'WP_ABILITIES_API_DEMO_CREATE_POST: Sanitized values:',
+			'WP_ABILITIES_API_DEMO_CREATE_POST: - Title: ' . $sanitized_title,
+			'WP_ABILITIES_API_DEMO_CREATE_POST: - Content length: ' . strlen( $sanitized_content ),
+			'WP_ABILITIES_API_DEMO_CREATE_POST: - Status: ' . $sanitized_status,
+			'WP_ABILITIES_API_DEMO_CREATE_POST: - Author ID: ' . $current_user_id,
 		)
 	);
 
@@ -129,12 +129,12 @@ function wp_abilities_demo_create_post( $input ) {
 		'post_author'  => $current_user_id,
 	);
 
-	wp_abilities_demo_log( 'AI_EXPERIMENTS_CREATE_POST: Calling wp_insert_post()' );
+	wp_abilities_demo_log( 'WP_ABILITIES_API_DEMO_CREATE_POST: Calling wp_insert_post()' );
 
 	$post_id = wp_insert_post( $post_data );
 
 	if ( is_wp_error( $post_id ) ) {
-		wp_abilities_demo_log( 'AI_EXPERIMENTS_CREATE_POST: wp_insert_post() returned WP_Error: ' . $post_id->get_error_message() );
+		wp_abilities_demo_log( 'WP_ABILITIES_API_DEMO_CREATE_POST: wp_insert_post() returned WP_Error: ' . $post_id->get_error_message() );
 		return array(
 			'success' => false,
 			'error'   => __( 'Failed to create post', 'wp-abilities-api-demo' ) . ': ' . $post_id->get_error_message(),
@@ -145,9 +145,9 @@ function wp_abilities_demo_create_post( $input ) {
 
 	wp_abilities_demo_log(
 		array(
-			'AI_EXPERIMENTS_CREATE_POST: Post created successfully',
-			'AI_EXPERIMENTS_CREATE_POST: - Post ID: ' . $post_id,
-			'AI_EXPERIMENTS_CREATE_POST: - Post URL: ' . $post_url,
+			'WP_ABILITIES_API_DEMO_CREATE_POST: Post created successfully',
+			'WP_ABILITIES_API_DEMO_CREATE_POST: - Post ID: ' . $post_id,
+			'WP_ABILITIES_API_DEMO_CREATE_POST: - Post URL: ' . $post_url,
 		)
 	);
 
