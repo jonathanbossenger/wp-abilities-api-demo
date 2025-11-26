@@ -54,5 +54,6 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
-          name: wp-abilities-api-demo
+          name: wp-abilities-api-demo-${{ github.run_number }}
           path: ./wp-abilities-api-demo.zip
+          retention-days: 30
