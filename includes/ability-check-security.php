@@ -31,78 +31,87 @@ function ai_experiments_define_security_check_runner() {
 	 */
 	class WP_Abilities_API_Demo_Security_Check_Runner extends WordPress\Plugin_Check\Checker\Abstract_Check_Runner {
 
-	/**
-	 * Plugin slug to check.
-	 *
-	 * @var string
-	 */
-	private $plugin_slug;
+		/**
+		 * Plugin slug to check.
+		 *
+		 * @var string
+		 */
+		private $plugin_slug;
 
-	/**
-	 * Set the plugin slug to check.
-	 *
-	 * @param string $plugin_slug Plugin slug to check.
-	 */
-	public function set_plugin_slug( $plugin_slug ) {
-		
-		$this->plugin_slug = $plugin_slug;
-	}
+		/**
+		 * Set the plugin slug to check.
+		 *
+		 * @param string $plugin_slug Plugin slug to check.
+		 */
+		public function set_plugin_slug( $plugin_slug ) {
 
-	/**
-	 * Returns the plugin parameter based on the request.
-	 *
-	 * @return string The plugin parameter from the request.
-	 */
-	protected function get_plugin_param() {
-		return $this->plugin_slug;
-	}
+			$this->plugin_slug = $plugin_slug;
+		}
 
-	/**
-	 * Returns an array of Check slugs to run based on the request.
-	 * Returns empty array to run all available checks.
-	 *
-	 * @return array An array of Check slugs.
-	 */
-	protected function get_check_slugs_param() {
-		return array();
-	}
+		/**
+		 * Returns the plugin parameter based on the request.
+		 *
+		 * @return string The plugin parameter from the request.
+		 */
+		protected function get_plugin_param() {
+			return $this->plugin_slug;
+		}
 
-	/**
-	 * Returns an array of Check slugs to exclude based on the request.
-	 *
-	 * @return array An array of Check slugs.
-	 */
-	protected function get_check_exclude_slugs_param() {
-		return array();
-	}
+		/**
+		 * Returns an array of Check slugs to run based on the request.
+		 * Returns empty array to run all available checks.
+		 *
+		 * @return array An array of Check slugs.
+		 */
+		protected function get_check_slugs_param() {
+			return array();
+		}
 
-	/**
-	 * Returns the include experimental parameter based on the request.
-	 *
-	 * @return bool Returns false to exclude experimental checks.
-	 */
-	protected function get_include_experimental_param() {
-		return false;
-	}
+		/**
+		 * Returns an array of Check slugs to exclude based on the request.
+		 *
+		 * @return array An array of Check slugs.
+		 */
+		protected function get_check_exclude_slugs_param() {
+			return array();
+		}
 
-	/**
-	 * Returns an array of categories for filtering the checks.
-	 * Returns security category only.
-	 *
-	 * @return array An array of categories.
-	 */
-	protected function get_categories_param() {
-		return array( WordPress\Plugin_Check\Checker\Check_Categories::CATEGORY_SECURITY );
-	}
+		/**
+		 * Returns the include experimental parameter based on the request.
+		 *
+		 * @return bool Returns false to exclude experimental checks.
+		 */
+		protected function get_include_experimental_param() {
+			return false;
+		}
 
-	/**
-	 * Returns plugin slug parameter.
-	 *
-	 * @return string Plugin slug.
-	 */
-	protected function get_slug_param() {
-		return $this->plugin_slug;
-	}
+		/**
+		 * Returns an array of categories for filtering the checks.
+		 * Returns security category only.
+		 *
+		 * @return array An array of categories.
+		 */
+		protected function get_categories_param() {
+			return array( WordPress\Plugin_Check\Checker\Check_Categories::CATEGORY_SECURITY );
+		}
+
+		/**
+		 * Returns plugin slug parameter.
+		 *
+		 * @return string Plugin slug.
+		 */
+		protected function get_slug_param() {
+			return $this->plugin_slug;
+		}
+
+		/**
+		 * Returns the mode parameter.
+		 *
+		 * @return string The mode parameter.
+		 */
+		protected function get_mode_param() {
+			return '';
+		}
 
 		/**
 		 * Determines if the current request is intended for the plugin checker.
