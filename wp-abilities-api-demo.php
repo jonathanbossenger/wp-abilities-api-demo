@@ -41,6 +41,7 @@ require_once __DIR__ . '/includes/logger.php';
 require_once __DIR__ . '/includes/category-abilities-api-demo.php';
 require_once __DIR__ . '/includes/ability-site-info.php';
 require_once __DIR__ . '/includes/ability-plugins.php';
+require_once __DIR__ . '/includes/ability-themes.php';
 require_once __DIR__ . '/includes/ability-debug-log.php';
 require_once __DIR__ . '/includes/ability-create-post.php';
 require_once __DIR__ . '/includes/ability-check-security.php';
