@@ -102,7 +102,7 @@ function wp_abilities_demo_update_themes() {
 
 		wp_abilities_demo_log( 'WP_ABILITIES_API_DEMO_UPDATE_THEMES: Required files loaded' );
 
-		// Force check for theme updates
+		// Check for theme updates (uses transient caching internally)
 		wp_update_themes();
 
 		// Get themes with available updates
@@ -120,7 +120,7 @@ function wp_abilities_demo_update_themes() {
 		$theme_count = count( $theme_updates );
 		wp_abilities_demo_log( 'WP_ABILITIES_API_DEMO_UPDATE_THEMES: Found ' . $theme_count . ' theme(s) with updates available' );
 
-		// Prepare the upgrader
+		// Prepare the upgrader with silent skin for non-interactive updates
 		$skin     = new WP_Ajax_Upgrader_Skin();
 		$upgrader = new Theme_Upgrader( $skin );
 
