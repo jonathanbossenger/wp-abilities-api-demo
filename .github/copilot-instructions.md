@@ -147,7 +147,7 @@ Available: MySource, PEAR, PSR1, PSR2, PSR12, Squiz, Zend, Modernize, Normalized
 - Use WordPress Coding Standards
 - Always include ABSPATH security check
 - Use WordPress naming conventions (snake_case for functions)
-- Prefix functions with `ai_experiments_` or `wp_abilities_demo_`
+- Prefix functions with `wp_abilities_demo_`
 - Sanitize all user input
 - Use WordPress i18n functions for translatable strings
 - Add proper PHPDoc blocks
