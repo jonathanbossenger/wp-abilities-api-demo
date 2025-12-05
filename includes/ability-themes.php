@@ -97,6 +97,7 @@ function wp_abilities_demo_update_themes() {
 			require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 		}
 		if ( ! function_exists( 'request_filesystem_credentials' ) ) {
+			// Load file.php - may be needed by upgrader for filesystem operations
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 		}
 
