@@ -47,7 +47,7 @@ function wp_abilities_demo_enqueue_assets( $hook ) {
 	wp_enqueue_script(
 		'wp-abilities-demo-admin',
 		plugins_url( 'assets/js/admin.js', dirname( __FILE__ ) ),
-		array( 'wp-abilities' ),
+        array( 'wp-abilities' ),
 		filemtime( plugin_dir_path( dirname( __FILE__ ) ) . 'assets/js/admin.js' ),
 		true
 	);

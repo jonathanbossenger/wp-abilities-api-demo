@@ -12,6 +12,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+if ( ! file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+    // Composer dependencies are missing.
+    add_action(
+        'admin_notices',
+        function () {
+            ?>
+            <div class="notice notice-error">
+                <p><?php esc_html_e( 'WP Abilities API Demo plugin requires Composer dependencies. Please run "composer install" in the plugin directory.', 'wp-abilities-api-demo' ); ?></p>
+            </div>
+            <?php
+        }
+    );
+    return;
+}
+
+require_once __DIR__ . '/vendor/autoload.php';
+
 // Define debug constant for conditional logging.
 if ( ! defined( 'WP_ABILITIES_API_DEMO_DEBUG' ) ) {
 	define( 'WP_ABILITIES_API_DEMO_DEBUG', false );
