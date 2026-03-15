@@ -19,7 +19,7 @@ The WP Abilities API Demo plugin showcases how to register and use abilities thr
 
 - WordPress (latest version recommended)
 - PHP 8.3.6 or higher
-- [Composer](https://getcomposer.org/) (for plugin dependencies)
+- [Composer](https://getcomposer.org/) (for plugin dependencies, only for development)
 - [Plugin Check](https://wordpress.org/plugins/plugin-check/) plugin (for plugin checking ability)
 
 ## Installation
